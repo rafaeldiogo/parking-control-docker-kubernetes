@@ -1,0 +1,25 @@
+version: '2'
+services:
+  app:
+    image: 'parking-control'
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/parking-control-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=parking-control-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+volumes:
+  db_data: {}
